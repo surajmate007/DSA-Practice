@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int maximumDifference(vector<int>& nums) {
+        vector<int> minarr(nums.size(), 0);
+        vector<int> maxarr(nums.size(), 0);
+        int mn = INT_MAX, mx = INT_MIN;
+        int n = nums.size()-1;
+        
+        for(int i=0; i<nums.size(); i++){
+            if(nums[i] < mn){
+                mn = nums[i];
+            }
+            minarr[i] = mn;
+            
+            if(nums[n-i] > mx){
+                mx = nums[n-i];
+            }
+            maxarr[n-i] = mx;
+        }
+        
+        int diff = -1;
+        for(int i=0; i<=n; i++){
+            int val = maxarr[i] - minarr[i];
+            if(val != 0 and val > diff){
+                diff = val;
+            }
+        }
+        return diff;
+    }
+};
