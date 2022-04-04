@@ -1,0 +1,43 @@
+class Solution {
+public:
+    bool validpalin(string s){
+        int i=0; int j=s.length()-1;
+        while(i <= j){
+            if(s[i] == s[j]){
+                i++; j--;
+            }
+            else{
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    bool validPalindrome(string s) {
+        int i=0; int j=s.length()-1;
+        bool res1 = true; bool res2 = true;
+        while(i <= j){
+            if(s[i] == s[j]){
+                i++; j--;
+            }
+            else{
+                res1 = validpalin(s.substr(i+1, j-i));
+                if(res1 == true){
+                    return true;
+                }
+                res2 = validpalin(s.substr(i, j-i));
+                if(res2 == true){
+                    return true;
+                }
+                break;
+            }
+        }
+        
+        if(res1 == false and res2 == false){
+            return false;
+        }
+        
+        return true;
+    }
+    
+};
