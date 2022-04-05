@@ -1,0 +1,62 @@
+// Brute Force Approach:
+
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int fi = INT_MIN; int la = INT_MIN;
+        int n = height.size()-1;
+        
+        unordered_map<int, int> fimap;        
+        unordered_map<int, int> lamap;
+    
+        for(int i=0; i<height.size(); i++){
+            if(height[i] > fi){
+                fi = height[i];
+                if(fimap.find(fi) == fimap.end()){
+                    fimap[fi] = i;
+                }
+            }
+            if(height[n-i] > la){
+                la = height[n-i];
+                if(lamap.find(la) == lamap.end()){
+                    lamap[la] = n-i;
+                }
+            }
+        }
+        
+        int ans = 0;
+        for(auto a : fimap){
+            for(auto b : lamap){
+                int p = (min(a.first, b.first) * abs(a.second - b.second));
+                ans = max(ans, p);
+            }
+        }
+        
+        return ans;
+
+    }
+};
+
+// Optimised Approach:
+
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int i=0; int j=height.size()-1;
+        int ans = 0;
+        while(i < j){
+            int vol = min(height[i], height[j]) * (j-i);
+            if(vol > ans){
+                ans = vol;
+            }
+            
+            if(height[i] < height[j]){
+                i++;
+            }
+            else{
+                j--;
+            }
+        }
+        return ans;
+    }
+};
