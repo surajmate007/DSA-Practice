@@ -1,0 +1,29 @@
+class Solution {
+public:
+    
+    bool static comparator(pair<char, int>& a, pair<char, int>& b){
+        return a.second > b.second;
+    }
+    
+    string frequencySort(string s) {
+        unordered_map<char, int> mp;
+        for(int i=0; i<s.length(); i++){
+            mp[s[i]]++;
+        }
+        
+        vector<pair<char, int>> vec(mp.begin(), mp.end());
+        sort(vec.begin(), vec.end(), comparator);
+        
+        string ans = "";
+        for(auto ele : vec){
+            int k = ele.second;
+            char ch =ele.first;
+            while(k != 0){
+                ans += ch;
+                k--;
+            }
+        }
+        
+        return ans;
+    }
+};
