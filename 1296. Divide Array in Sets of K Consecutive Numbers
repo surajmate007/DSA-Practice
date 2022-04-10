@@ -1,0 +1,43 @@
+class Solution {
+public:
+    
+    bool startSeq(unordered_map<int, int>& fmap, int k, int val){   // check whether k consecutive sequence is possible or not
+        int p = 1;
+        while(p != k){
+            if(fmap[val + p] >= 1){
+                fmap[val + p]--;
+                p++;
+            }
+            else{
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    
+    bool isPossibleDivide(vector<int>& nums, int k) {
+        
+        sort(nums.begin(), nums.end());  // sorting is important to cnside elements fro small values
+        
+        unordered_map<int, int> fmap;  // stores element freq.
+        
+        for(int val : nums){
+            fmap[val]++;
+        }
+        
+        for(int val : nums){
+            if(fmap[val] == 0){   
+                continue;
+            }
+            
+            fmap[val]--;
+            
+            if(startSeq(fmap, k, val) == false){
+                return false;
+            }
+        }
+        
+        return true;
+    }
+};
