@@ -5,23 +5,23 @@ public:
         int ans = 0;
         for(int i=0; i<ops.size(); i++){
             if(ops[i] == "C"){
-                ans -= vec[vec.size()-1];
+                ans -= vec.back();
                 vec.pop_back();
             }
             else if(ops[i] == "D"){
                 vec.push_back(vec[vec.size()-1] * 2);
-                ans += vec[vec.size()-1];
+                ans += vec.back();
             }
             else if(ops[i] == "+"){
-                vec.push_back(vec[vec.size()-1] + vec[vec.size()-2]);
-                ans += vec[vec.size()-1];
+                vec.push_back(vec.back() + vec[vec.size()-2]);
+                ans += vec.back();
             }
             else{
                 stringstream num(ops[i]);
                 int val = 0;
                 num >> val;
                 vec.push_back(val);
-                ans += vec[vec.size()-1];
+                ans += vec.back();
             }
         }
         
