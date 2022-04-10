@@ -1,0 +1,36 @@
+class Solution {
+public:
+    bool isPossible(vector<int>& nums) {
+        unordered_map<int, int> fmap;   // It stores the frequency of elements     
+        unordered_map<int, int> hmap;   // stores the next required element for already started sequence
+        
+        for(int val : nums){
+            fmap[val]++;
+        }
+        
+        for(int val : nums){
+            if(fmap[val] == 0){         // checking whether element is remaining or not
+                continue;
+            }
+            
+            fmap[val]--;
+            
+            if(hmap[val] >= 1){         // if this element is required for previously started sequence then using it for that sequence
+                hmap[val]--;
+                hmap[val + 1]++;        // adding next required element in this sequence
+            }
+            
+            else if(fmap[val+1] >= 1 and fmap[val+2] >= 1){   // if element is not required anywhere then using it to create new sequence.
+                fmap[val+1]--;
+                fmap[val+2]--;
+                hmap[val+3]++;
+            }
+            else{
+                return false;
+            }
+        }
+        
+        return true;
+
+    }
+};
