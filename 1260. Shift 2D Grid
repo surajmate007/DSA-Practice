@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<vector<int>> shiftGrid(vector<vector<int>>& grid, int k) {
+        int n = grid.size(); int m = grid[0].size();
+        int prod = m*n;
+        k = k%prod;
+        
+        if(k==0){
+            return grid;
+        }
+        
+        int start = prod-k;
+        int i = start/m; int j = start%m;
+        
+        vector<vector<int>> ans;
+        vector<int> temp;
+        while(prod != 0){
+            temp.push_back(grid[i%n][j%m]);
+            prod--; j++;
+            if(j%m == 0){
+                i++;
+            }
+            
+            if(temp.size() == m){
+                ans.push_back(temp);
+                temp.clear();
+            }
+        }
+        
+        return ans;
+    }
+};
