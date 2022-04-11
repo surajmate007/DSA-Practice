@@ -1,0 +1,19 @@
+class Solution {
+public:
+    vector<int> findingUsersActiveMinutes(vector<vector<int>>& logs, int k) {
+        set<vector<int>> st(logs.begin(), logs.end());
+
+        unordered_map<int, int> mp;
+        
+        for(auto p : st){
+           mp[p[0]]++;
+        }
+        
+        vector<int> ans(k, 0);
+        for(auto ele : mp){
+            ans[ele.second-1]++;
+        }
+        
+        return ans; 
+    }
+};
