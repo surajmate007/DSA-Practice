@@ -1,0 +1,48 @@
+class Solution {
+public:
+    int minAreaRect(vector<vector<int>>& points) {
+        int area = INT_MAX;
+        unordered_map<int, set<int>> mp;
+        for(auto val : points){
+            mp[val[0]].insert(val[1]);
+        }
+        
+        for(auto e = mp.begin(); e != mp.end(); e++){
+            
+            if(e->second.size() < 2){
+                continue;
+            }
+            
+            for(auto f = e; f != mp.end(); f++){
+                
+                if(f->second.size() < 2){
+                    continue;
+                }
+                
+                if(e->first == f->first){
+                    continue;
+                }
+                
+                int x1, x2;
+                x1 = e->first; x2 = f->first;
+                
+                for(auto y1 : e->second){
+                    for(auto y2 : f->second){
+                        if(y1 == y2){
+                            continue;
+                        }
+                        
+                        if(mp[x1].find(y2) != mp[x1].end() and mp[x2].find(y1) != mp[x2].end()){
+                            area = min(area, abs(x1-x2)*abs(y1-y2));
+                        }    
+                    }
+                }
+            }
+        }
+        
+        if(area == INT_MAX){
+            return 0;
+        }
+        return area;
+    }
+};
