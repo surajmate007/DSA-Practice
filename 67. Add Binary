@@ -1,0 +1,28 @@
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        string ans = "";
+        int c = 0;
+        int i = a.length()-1; int j = b.length()-1;
+        int sum = 0;
+        while(i >= 0 or j >= 0 or c > 0){
+            int p,q;
+            if(i>=0){
+                p = int(a[i]) - 48;
+            }else{ p = 0;}
+            
+            if(j>=0){
+                q = int(b[j]) - 48;
+            }else{ q = 0;}
+            
+            sum = p + q + c;
+            cout<<p<<" "<<q<<" "<<c<<" "<<sum<<endl;
+            c = sum / 2; sum = sum % 2;
+            ans += to_string(sum);
+            
+            i--; j--;
+        }
+        reverse(ans.begin(), ans.end());
+        return ans;
+    }
+};
