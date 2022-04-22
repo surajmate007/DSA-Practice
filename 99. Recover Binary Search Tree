@@ -1,0 +1,55 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+ 
+// Here we are simply storing all the node values in vector and then sorting the vector and then checkinh wehther the node values in BST are in same order. 
+ 
+class Solution {
+public:
+    vector<int> vec; int idx=0;
+    
+    void inorder(TreeNode* root){                       // To extract all the nodes from the binary search tree.
+        if(root == NULL){
+            return;
+        }
+        
+        inorder(root->left);
+        vec.push_back(root->val);
+        inorder(root->right);
+    }   
+    
+    void check(vector<int> vec, TreeNode* root){        // To check whether the nodes are in proper order or not.
+        if(root == NULL){
+            return;
+        }
+        
+        check(vec, root->left);
+        if(root->val != vec[idx]){
+            root->val = vec[idx];
+        }
+        idx++;
+        check(vec, root->right);
+    }
+    
+    void recoverTree(TreeNode* root) {                  // Main funtion of the problem.
+        if(root == NULL){
+            return;
+        }
+        
+        inorder(root);
+        sort(vec.begin(), vec.end());
+        check(vec, root);
+        return;
+    }
+};
+
+
+
