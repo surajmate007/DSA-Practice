@@ -1,0 +1,63 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<TreeNode*> vec;
+    int pidx, qidx, rootidx = -1;
+    
+    void inorder(TreeNode* root, TreeNode* p, TreeNode* q){
+        if(root == NULL){
+            return;
+        }
+        inorder(root->left, p, q);
+        vec.push_back(root);
+        if(p->val == root->val){
+            pidx = vec.size()-1;
+        }
+        if(q->val == root->val){
+            qidx = vec.size()-1;
+        }
+        inorder(root->right, p, q);
+    }
+    
+    TreeNode* findRoot(int start, int end, TreeNode* root){
+        for(int i=start; i<=end; i++){
+            if(root->val == vec[i]->val){
+                rootidx = i;
+                break;
+            }
+        }
+        
+        TreeNode* ans = root;
+        if(pidx == rootidx or qidx == rootidx){
+            return root;
+        }
+        else if((pidx < rootidx and qidx > rootidx) or (pidx > rootidx and qidx < rootidx)){
+            return root;
+        }
+        else if(pidx < rootidx and qidx < rootidx){
+            root = findRoot(start, rootidx-1, root->left);
+        }
+        else if(pidx > rootidx and qidx > rootidx){
+            root = findRoot(rootidx+1, end, root->right);
+        }
+        return root;
+    }
+    
+    
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(root == NULL){
+            return NULL;
+        }
+        
+        inorder(root, p, q);
+        return findRoot(0, vec.size()-1, root);
+    }
+};
